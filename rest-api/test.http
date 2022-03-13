@@ -1,0 +1,50 @@
+@API = http://localhost:8080
+
+###
+
+POST {{API}}/todo
+Content-Type: application/json
+
+{
+  "Title": "Wake up at 6 a.m."
+}
+
+###
+
+POST {{API}}/todo
+Content-Type: application/json
+
+{
+  "Title": "Eat breakfast"
+}
+
+###
+
+POST {{API}}/todo
+Content-Type: application/json
+
+{
+  "Title": "Go to school early"
+}
+
+###
+
+PATCH {{API}}/todo
+Content-Type: application/json
+
+{
+  "Title": "Wake up at 6 a.m."
+}
+
+###
+
+GET {{API}}/todos
+
+###
+
+DELETE {{API}}/todo
+Content-Type: application/json
+
+{
+  "Title": "Eat breakfast"
+}
