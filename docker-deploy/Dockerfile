@@ -6,7 +6,7 @@ RUN go mod download
 COPY . .
 RUN go build -ldflags \
   "-X 'main.buildcommit=$(git log --format="%H" -n 1)' \
-  -X 'main.buildtime=$(date "+%A %W %Y %X")'" \ 
+  -X 'main.buildtime=$(date "+%A %d %Y %X")'" \ 
   -o app
 
 FROM alpine:latest
