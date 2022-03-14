@@ -1,0 +1,38 @@
+@API = http://localhost:8080
+@accessToken = {{login.response.body.$.AccessToken}}
+@refreshToken = {{login.response.body.$.RefreshToken}}
+
+###
+
+# @name login
+
+POST {{API}}/login
+Content-Type: application/json
+
+{
+  "Username": "Albert"
+}
+
+###
+
+GET {{API}}/resource
+Authorization: Bearer {{accessToken}}
+
+###
+
+POST {{API}}/refresh
+Content-Type: application/json
+
+{
+  "RefreshToken": "{{refreshToken}}"
+}
+
+###
+
+POST {{API}}/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "RefreshToken": "{{refreshToken}}"
+}
