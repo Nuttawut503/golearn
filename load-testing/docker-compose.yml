@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  influxdb:
+    image: influxdb:1.8.10
+    environment:
+    - INFLUXDB_DB=k6
+  grafana:
+    image: grafana/grafana
+    ports:
+    - "8000:3000"
+    environment:
+    - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    - GF_AUTH_ANONYMOUS_ENABLED=true
+    - GF_AUTH_BASIC_ENABLED=false
+  k6:
+    image: grafana/k6
+    environment:
+    - K6_OUT=influxdb=http://influxdb:8086/k6
+    volumes:
+    - ./script.js:/script.js
+  myserver:
+    build: .
+    image: myserver
