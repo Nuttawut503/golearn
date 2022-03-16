@@ -1,0 +1,22 @@
+@API = http://localhost:8080
+
+###
+
+POST {{API}}/account
+Content-Type: application/json
+
+{
+  "email": "wilbert@example.com",
+  "firstname": "Wilbert",
+  "lastname": "Smith",
+  "age": 20
+}
+
+###
+
+DELETE  {{API}}/account
+Content-Type: application/json
+
+{
+  "email": "Hello@example.com"
+}
