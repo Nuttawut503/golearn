@@ -8,7 +8,7 @@ import (
 
 func main() {
 	servers := "localhost:9092"
-	mode := "consumer"
+	var mode string
 	if v, ok := os.LookupEnv("mode"); ok {
 		mode = v
 	}
@@ -16,5 +16,7 @@ func main() {
 		RunConsumer(servers)
 	} else if mode == "producer" {
 		RunProducer(servers)
+	} else if mode == "admin" {
+		RunAdmin(servers)
 	}
 }

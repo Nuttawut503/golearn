@@ -39,8 +39,9 @@ func RunConsumer(servers string) {
 		"bootstrap.servers":               servers,
 		"group.id":                        "mygroup",
 		"auto.offset.reset":               "earliest",
-		"session.timeout.ms":              6000,
+		"go.events.channel.enable":        true,
 		"go.application.rebalance.enable": true,
+		"session.timeout.ms":              6000,
 	})
 	if err != nil {
 		log.Fatal("Consumer can't connect")
@@ -56,21 +57,19 @@ func RunConsumer(servers string) {
 		case <-sig:
 			log.Println("Shutting down consumer")
 			return
-		default:
-			event := consumer.Poll(100)
-			if event == nil {
-				continue
-			}
-			switch ev := event.(type) {
+		case ev := <-consumer.Events():
+			switch ev := ev.(type) {
 			case kafka.AssignedPartitions:
-				log.Printf("Assign partitions: %v\n", ev)
+				log.Println(ev)
+				consumer.Assign(ev.Partitions)
 			case kafka.RevokedPartitions:
-				log.Printf("Revoke partitions: %v\n", ev)
+				log.Println(ev)
+				consumer.Unassign()
 			case *kafka.Message:
 				log.Printf("Message received: partition - %v + value: %v\n", ev.TopicPartition, string(ev.Value))
 				handleEvent(ev.TopicPartition.Topic, ev.Value)
 			case kafka.Error:
-				log.Printf("Error occurred: %v", ev.String())
+				log.Printf("Error occurred: %v", ev)
 			}
 		}
 	}
