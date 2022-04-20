@@ -1,0 +1,27 @@
+syntax = "proto3";
+package customerpb;
+option go_package="server/customerpb";
+
+message CustomerInfo {
+  string customer_id = 1;
+  string customer_name = 2;
+}
+
+message GetCustomersRequest {}
+
+message GetCustomersResponse {
+  repeated CustomerInfo customers = 1;
+}
+
+message GetCustomerByIdRequest {
+  string customer_id = 1;
+}
+
+message GetCustomerByIdResponse {
+  CustomerInfo customer = 1;
+}
+
+service Customer {
+  rpc GetCustomers(GetCustomersRequest) returns (GetCustomersResponse) {};
+  rpc GetCustomerById(GetCustomerByIdRequest) returns (GetCustomerByIdResponse) {};
+}
