@@ -1,0 +1,11 @@
+groups:
+- name: AllInstance
+  rules:
+  - alert: InstanceDown
+    expr: up == 0
+    for: 10s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Server Unavailable"
+      description: "Server -> {{ $labels.job }} - {{ $labels.instance }}"

@@ -1,0 +1,9 @@
+global:
+route:
+  group_by: [...]
+  repeat_interval: 3h
+  receiver: webhook_issues
+receivers:
+  - name: webhook_issues
+    webhook_configs:
+    - url: http://172.18.117.234:8080/webhook
